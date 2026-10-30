@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PocketCampus — Student Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <p class="eyebrow">YOUR CAMPUS MONEY</p>
+      <h1>PocketCampus<span>.</span></h1>
+      <p class="subtitle">A simple expense tracker for student life.</p>
+    </header>
+
+    <section class="summary">
+      <article class="card">
+        <p>Spent this month</p>
+        <strong id="total">₹0</strong>
+      </article>
+
+      <article class="card">
+        <p>Monthly budget</p>
+        <strong id="budget">₹8,000</strong>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Add an expense</h2>
+      <form id="expense-form">
+        <label for="name">What did you spend on?</label>
+        <input id="name" type="text" placeholder="For example: lunch" maxlength="50" required>
+
+        <div class="form-row">
+          <div>
+            <label for="amount">Amount (₹)</label>
+            <input id="amount" type="number" min="1" step="1" placeholder="150" required>
+          </div>
+
+          <div>
+            <label for="category">Category</label>
+            <select id="category">
+              <option>Food</option>
+              <option>Travel</option>
+              <option>Study</option>
+              <option>Shopping</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit">Add expense</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="list-heading">
+        <div>
+          <p class="eyebrow">YOUR SPENDING</p>
+          <h2>Recent expenses</h2>
+        </div>
+        <button id="clear-button" class="clear-button" type="button">Clear all</button>
+      </div>
+      <div id="expense-list"></div>
+    </section>
+
+    <footer>Made for student life ✦</footer>
+  </main>
+</body>
+</html>
