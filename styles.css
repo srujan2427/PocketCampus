@@ -214,3 +214,46 @@ footer {
     font-size: 29px;
   }
 }
+
+.chart-row {
+  margin: 14px 0;
+}
+
+.chart-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  color: #68736a;
+  font-size: 13px;
+}
+
+.chart-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #edf0eb;
+}
+
+.chart-bar {
+  height: 100%;
+  border-radius: 10px;
+  background: #6b9676;
+}
+
+.budget-card {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.category-card {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+@media (max-width: 500px) {
+  .budget-card,
+  .category-card {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

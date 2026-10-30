@@ -1,5 +1,6 @@
 const STORAGE_KEY = "pocketCampusExpenses";
-const MONTHLY_BUDGET = 8000;
+const MONTHLY_BUDGET = 
+Number(localStorage.getItem("pocketCampusBudget")) || 8000;
 
 const form = document.getElementById("expense-form");
 const expenseList = document.getElementById("expense-list");
@@ -30,6 +31,40 @@ function formatMoney(amount) {
 
 function saveExpenses() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+}
+
+function renderCategoryChart() {
+  const chart = document.getElementById("category-chart");
+  const totals = {};
+
+  expenses.forEach(function(expense) {
+    totals[expense.category] =
+      (totals[expense.category] || 0) + Number(expense.amount);
+  });
+
+  const categories = Object.entries(totals);
+  const biggestSpend = Math.max(...Object.values(totals), 1);
+
+  if (categories.length === 0) {
+    chart.innerHTML = '<p class="empty">Add expenses to see your chart.</p>';
+    return;
+  }
+
+  chart.innerHTML = categories.map(function([category, amount]) {
+    const barWidth = (amount / biggestSpend) * 100;
+
+    return `
+      <div class="chart-row">
+        <div class="chart-label">
+          <span>${category}</span>
+          <strong>${formatMoney(amount)}</strong>
+        </div>
+        <div class="chart-track">
+          <div class="chart-bar" style="width: ${barWidth}%"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
 function renderExpenses() {
@@ -87,6 +122,7 @@ function renderExpenses() {
   }, 0);
 
   totalDisplay.textContent = formatMoney(total);
+  renderCategoryChart();
 }
 
 function updatePage() {
@@ -136,3 +172,19 @@ clearButton.addEventListener("click", function() {
 });
 
 renderExpenses();
+
+const editBudgetButton = document.getElementById("edit-budget");
+
+editBudgetButton.addEventListener("click", function() {
+  const newBudget = Number(
+    prompt("Enter your monthly budget in rupees:")
+  );
+
+  if (!Number.isFinite(newBudget) || newBudget <= 0) {
+    alert("Please enter an amount greater than zero.");
+    return;
+  }
+
+  localStorage.setItem("pocketCampusBudget", newBudget);
+  budgetDisplay.textContent = formatMoney(newBudget);
+});
